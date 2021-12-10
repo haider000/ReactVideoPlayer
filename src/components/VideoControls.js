@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import { Slider } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 import screenfull from "screenfull";
+import { withStyles } from "@material-ui/core/styles";
 
 // Assets
 import {
@@ -22,7 +22,6 @@ import { formatTime } from "../assets/Helper.js";
 
 // Styles
 import styles from "../styles/VideoControls.module.scss";
-import { GAevent } from "../utils/GA";
 
 // Overriding the default color of Slider with White
 const WhiteSlider = withStyles({
@@ -58,31 +57,16 @@ export const VideoControls = ({
       ...controls,
       playing: !controls.playing
     });
-
-    GAevent({
-      category: "Player",
-      action: `Video ${controls.playing ? "Paused" : "Played"}`
-    });
   };
 
   // Funtion to Handle Forward10 Button
   const handleForward10 = () => {
     videoRef.current.seekTo(videoRef.current.getCurrentTime() + 10);
-
-    GAevent({
-      category: "Player",
-      action: "Video Forward10"
-    });
   };
 
   // Funtion to Handle Replay10 Button
   const handleReplay10 = () => {
     videoRef.current.seekTo(videoRef.current.getCurrentTime() - 10);
-
-    GAevent({
-      category: "Player",
-      action: "Video Replay10"
-    });
   };
 
   // Funtion to Mute the Volume
@@ -90,11 +74,6 @@ export const VideoControls = ({
     setControls({
       ...controls,
       muted: !controls.muted
-    });
-
-    GAevent({
-      category: "Player",
-      action: `Video ${controls.muted ? "Unmuted" : "Muted"}`
     });
   };
 
@@ -132,11 +111,6 @@ export const VideoControls = ({
       ...controls,
       isFullScreen: !controls.isFullScreen
     });
-
-    GAevent({
-      category: "Player",
-      action: `Video Fullscreen ${controls.isFullScreen ? "Exit" : "Enter"}`
-    });
   };
 
   // Function to Handle Video Seekbar Slider Change
@@ -166,9 +140,9 @@ export const VideoControls = ({
   };
 
   // Function to Handle onClick on controls-overlay
-  const handleOverlayOnClick = e => {
+  const handleOverlayOnClick = (e) => {
     if (e.target.getAttribute("name") === "controls-overlay") {
-      setControls(current => ({ ...current, playing: !current.playing }));
+      setControls((current) => ({ ...current, playing: !current.playing }));
     }
   };
 
@@ -176,7 +150,7 @@ export const VideoControls = ({
     <Container
       fluid
       className={styles["controls-overlay"]}
-      onClick={e => handleOverlayOnClick(e)}
+      onClick={(e) => handleOverlayOnClick(e)}
       name="controls-overlay"
     >
       {/* TOP: Title */}
@@ -201,7 +175,7 @@ export const VideoControls = ({
               onMouseDown={handleSeekbarMouseDown}
               onChangeCommitted={handleSeekbarMouseUp}
               valueLabelDisplay="auto"
-              scale={x => parseInt((totalSeconds * x) / 100)}
+              scale={(x) => parseInt((totalSeconds * x) / 100)}
             />
           </Row>
           <Row className="">

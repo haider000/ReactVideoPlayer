@@ -1,8 +1,12 @@
 import Carousel from "react-multi-carousel";
 import { Card, Container } from "react-bootstrap";
-import { GAevent } from "../utils/GA";
 
-export const VideoQueue = ({ videoQueue, setSelectedVideo, selectedVideo }) => {
+export const VideoQueue = ({
+  videoQueue,
+  setSelectedVideo,
+  selectedVideo,
+  setYoutubeUrl
+}) => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 1200 },
@@ -36,12 +40,8 @@ export const VideoQueue = ({ videoQueue, setSelectedVideo, selectedVideo }) => {
                 key={at}
                 className="bg-dark text-white m-1 rounded-3"
                 onClick={() => {
+                  setYoutubeUrl("");
                   setSelectedVideo(at);
-                  GAevent({
-                    category: "Click",
-                    action: "Video Selected from Queue",
-                    label: `At: ${at}`
-                  });
                 }}
                 style={{
                   cursor: "pointer",

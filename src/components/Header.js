@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 
 // PEXELS API
 import pexels from "../api/pexels";
-import { GAevent } from "../utils/GA";
 
 export const Header = ({ videoQueue, setVideoQueue }) => {
   // State for Video Search Input
@@ -27,7 +26,7 @@ export const Header = ({ videoQueue, setVideoQueue }) => {
   });
 
   // Function to handle onSearch
-  const handleOnSearch = e => {
+  const handleOnSearch = (e) => {
     e.preventDefault();
 
     // If input is empty, then show alert
@@ -40,12 +39,6 @@ export const Header = ({ videoQueue, setVideoQueue }) => {
       return;
     }
 
-    GAevent({
-      category: "Click",
-      action: "Searched for a video",
-      label: `Search Text: ${videoLinkInput}`
-    });
-
     setAlert({
       status: "success",
       state: false,
@@ -55,7 +48,7 @@ export const Header = ({ videoQueue, setVideoQueue }) => {
     setVideoLinkInput("");
   };
 
-  const fetchAndAddVideo = async str => {
+  const fetchAndAddVideo = async (str) => {
     setIsLoading(true);
     try {
       // PEXELS API
@@ -65,12 +58,6 @@ export const Header = ({ videoQueue, setVideoQueue }) => {
           per_page: 3,
           page: 1
         }
-      });
-
-      GAevent({
-        category: "API",
-        action: "GET: PEXELS",
-        label: "Path: /videos/search"
       });
 
       // If no video found, then show alert
@@ -85,7 +72,7 @@ export const Header = ({ videoQueue, setVideoQueue }) => {
       }
 
       // Adding 'text' property to all objects of array
-      const videos = response.data.videos.map(obj => ({
+      const videos = response.data.videos.map((obj) => ({
         ...obj,
         text: str
       }));
@@ -116,7 +103,7 @@ export const Header = ({ videoQueue, setVideoQueue }) => {
       className="shadow-lg bg-dark d-flex justify-content-between p-3"
     >
       <Link to="/" className="navbar-brand px-4 text-white">
-        S2R2 Video Player
+        React Video Player
       </Link>
       {/* ALERT */}
       {alert.state && (
@@ -128,13 +115,13 @@ export const Header = ({ videoQueue, setVideoQueue }) => {
           {alert.message}
         </Alert>
       )}
-      <Form className="d-flex" onSubmit={e => handleOnSearch(e)}>
+      <Form className="d-flex" onSubmit={(e) => handleOnSearch(e)}>
         {/* SEARCH INPUT */}
         <FormControl
           type="text"
           placeholder="Search Key Word"
           value={videoLinkInput}
-          onChange={e => setVideoLinkInput(e.target.value)}
+          onChange={(e) => setVideoLinkInput(e.target.value)}
         />
         {/* SEARCH BUTTON */}
         <Button

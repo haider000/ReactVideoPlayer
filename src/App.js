@@ -1,33 +1,15 @@
 // Libraries
-import { Route, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import ReactGA from "react-ga";
+import { Route } from "react-router-dom";
+import { useState } from "react";
 
 // Components
 import { Header } from "./components/Header";
 import { Home } from "./pages/Home";
-import { Footer } from "./components/Footer";
-
-const usePageView = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    // console.log("Initialized REACT GA");
-    ReactGA.initialize(process.env.REACT_APP_GA_ID);
-  }, []);
-
-  useEffect(() => {
-    // console.log("Location changes detected.");
-    // console.log(location);
-    ReactGA.pageview(location.pathname);
-  }, [location]);
-};
 
 export default function App() {
   // State for Video Queue
   const [videoQueue, setVideoQueue] = useState([]);
 
-  usePageView();
   return (
     <>
       <div className="min-vh-100">
@@ -44,7 +26,6 @@ export default function App() {
           <p className="text-center">Under construction...</p>
         </Route>
       </div>
-      <Footer />
     </>
   );
 }
